@@ -1,70 +1,72 @@
-# Getting Started with Create React App
+# Gator Gather - A Social Media Platform for Local Events
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+*Gator Gather* is a mobile and web application designed to provide users with a comprehensive view of all the activities taking place in their vicinity. Think of it as *SeatGeek*, but specifically tailored for discovering and participating in parties and exciting local events.
 
-## Available Scripts
+## Technologies
 
-In the project directory, you can run:
+### Frontend Development
+- React.js
+  - Material UI
 
-### `npm start`
+### Backend/Database/Cloud Services
+- Firebase
+  - Firestore
+  - Firebase Authentication
+  - Cloud Functions for Firebase
+  - Firebase Cloud Messaging (Push Notifications)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Geolocation Services
+- Google Maps API
+- Mapbox API
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **User Profiles**
+  - Users can connect with each other
+  - Ability to form groups and find friends to attend events (To be determined)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Event Creation and Management**
+  - Users can effortlessly create, edit, and manage their events
+  - Event details include:
+    - Name
+    - Date
+    - Time
+    - Location
+    - Description
+    - Media Uploads
+  - Event Discovery options include:
+    - Calendar view
+    - TikTok/Reel style discovery feed
+    - Event search by:
+      - Location
+      - Date
+      - Category
+      - Keywords
+  - Geolocation Integration for personalized event recommendations based on the user's current location and directions
 
-### `npm run build`
+- **Event Interaction**
+  - Users can post, like, comment on, share, and RSVP to events
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Messaging and Notifications**
+  - In-app messaging for both hosts and attendees
+  - Notifications for event updates, new events, and messages
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Reviews and Ratings**
+  - Users can leave reviews and ratings for events they have attended
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Calendar Integration**
+  - Option for users to add events directly to their personal calendars
 
-### `npm run eject`
+## How to Run the Application
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+To get started with *Gator Gather*, follow the steps below:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Clone this repository.
+2. Install all necessary dependencies using `npm install`.
+3. Run the development server with `npm start`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Feel free to contribute to the project and make it even better!
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+*Enjoy the Gator Gather experience and stay updated with all the exciting events in your area!*
