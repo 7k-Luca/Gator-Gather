@@ -1,23 +1,96 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# macOS and Linux file system files
+.DS_Store
+Thumbs.db
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Node.js related files
+node_modules/
+npm-debug.log*
+yarn-error.log*
 
-# testing
-/coverage
+# Firebase configuration files
+firebase.json
+.firebaserc
+
+# Firebase SDK files
+firebase-*.js
+
+# Firebase Cloud Functions
+functions/node_modules/
+functions/.runtimeconfig.json
+functions/lib/
+functions/.env
+
+# Build and compiled files
+build/
+dist/
+out/
+public/build/
+public/assets/
 
 # production
 /build
 
-# misc
-.DS_Store
+# Exclude specific folders within src
+/src/hooks/
+/src/context/
+/src/firebase/
+/src/pages/AdminPages/
+/src/assets/
+.firebaserc
+firebase.json
+firebase.indexes.json
+firebase.rules
+
+# Firebase Hosting deploy files
+**/firebase.json
+**/.firebaserc
+
+# Environment variables
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# Firebase emulators logs
+firebase-debug.log
+
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+firebase-debug.log*
+firebase-debug.*.log*
+
+# Firebase rules
+firestore.rules
+storage.rules
+firestore.index
+firebase.json
+.firebaserc
+
+# Firebase indexes
+firestore.indexes.json
+
+# User-specific files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Firebase cache
+.firebase/
+
+# Firebase config
+.firebaserc
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
