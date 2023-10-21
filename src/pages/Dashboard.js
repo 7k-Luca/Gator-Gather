@@ -1,7 +1,13 @@
 import React from 'react'
 
-export default function Dashboard() {
+// Navigation Components
+import Navigation from '../components/Navigation'
+
+export default function Dashboard() {    
     return (
-        <div>Dashboard</div>
+        <div>
+            <Navigation/>
+            Dashboard
+        </div>
     )
 }
