@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import MenuIcon from '@mui/icons-material/Menu';
 import Theme from '../Theme';
 
 import { Link } from "react-router-dom";
@@ -27,8 +23,7 @@ export default function Navbar() {
     ];
 
     return (
-        <Box >
-            <CssBaseline />
+        <Box>
             <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                 <Toolbar>
                     <Typography variant="h6" noWrap component="div">
@@ -39,7 +34,7 @@ export default function Navbar() {
             <Drawer
                 variant='permanent'
                 sx={{
-                position: 'fixed',
+                position: 'relative',
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: 175,
@@ -48,6 +43,7 @@ export default function Navbar() {
                     backgroundColor: Theme.palette.secondary.main,
                 },
                 }}
+                anchor="left"
                 open={true}
             >
                 <Toolbar

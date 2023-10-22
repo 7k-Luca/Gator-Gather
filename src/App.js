@@ -1,7 +1,9 @@
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Material UI
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider, styled } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
 
 // pages
 import Dashboard from './pages/Dashboard';
@@ -20,10 +22,20 @@ import Navigation from './components/Navigation';
 import Theme from './Theme';
 
 function App() {
+  // Allows the visibility of Main Content away from the sidebar and appbar
+  const MainContent = styled(Box)({
+    flexGrow: 1,
+    padding: Theme.spacing(3),
+    marginTop: 64,
+    marginLeft: 175,
+  });
+
   return (
     <ThemeProvider theme={Theme}>
       <Router>
+      <CssBaseline />
         <Navigation/>
+        <MainContent>
         <Routes>
           {/* Logged In */}
           <Route path="/dashboard" element={<Dashboard/>}/>
@@ -31,13 +43,16 @@ function App() {
           <Route path="/create-event" element={<CreateEvent/>}/>
           <Route path="/friends" element={<Friends/>}/>
           <Route path="/groups" element={<Groups/>}/>
+          <Route path="*" element={<Err/>} />
 
           {/* Not Logged In */}
           <Route path="/login" element={<Login/>}/>
           <Route path="/signup" element={<Signup/>}/>
-          <Route path="*" element={<Err/>} />
-        </Routes>
+              
+          </Routes>
+        </MainContent>
       </Router>
+      
     </ThemeProvider>
   );
 }
