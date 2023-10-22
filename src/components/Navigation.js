@@ -14,56 +14,41 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 import Theme from '../Theme';
 
+import { Link } from "react-router-dom";
+
 export default function Navbar() {
-    const [open, setOpen] = useState(true);
-
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+    const routes = [
+        { text: 'My Dashboard', link: '/dashboard' },
+        { text: 'Calendar', link: '/calendar' },
+        { text: 'Create Event', link: '/create-event' },
+        { text: 'Friends', link: '/friends' },
+        { text: 'Groups', link: '/groups' },
+        { text: 'Log Out', link: '/login' },
+    ];
 
     return (
         <Box >
             <CssBaseline />
-            <AppBar
-                position="sticky"
-                sx={{
-                    zIndex: (theme) => theme.zIndex.drawer + 1,
-                }}  
-            >
+            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                 <Toolbar>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={handleDrawerOpen}
-                    edge="start"
-                    sx={{
-                    marginRight: '36px',
-                    ...(open && { display: 'none' }),
-                    }}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" noWrap component="div">
-                    Gator Gather
-                </Typography>
+                    <Typography variant="h6" noWrap component="div">
+                        Gator Gather
+                    </Typography>
                 </Toolbar>
             </AppBar>
             <Drawer
-                variant="permanent"
+                variant='permanent'
                 sx={{
-                width: 240,
+                position: 'fixed',
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
-                    width: 240,
+                    width: 175,
                     boxSizing: 'border-box',
+                    boxShadow: 1,
                     backgroundColor: Theme.palette.secondary.main,
                 },
                 }}
-                open={open}
+                open={true}
             >
                 <Toolbar
                 sx={{
@@ -73,17 +58,15 @@ export default function Navbar() {
                     px: [1],
                 }}
                 >
-                <IconButton onClick={handleDrawerClose}>
-                    <ChevronLeftIcon />
-                </IconButton>
+                    {/* This Toolbar creates space before the List */}
                 </Toolbar>
                 <Divider />
                 <List>
-                {['My Dashboard', 'Calendar', 'Create Event', 'Friends', 'Groups'].map((text, index) => (
-                    <ListItem button key={text}>
-                    <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                    {routes.map((route, index) => (
+                        <ListItem key={index} button component={Link} to={route.link}>
+                            <ListItemText primary={route.text} />
+                        </ListItem>
+                    ))}
                 </List>
             </Drawer>
         </Box>
