@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,11 +12,21 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useLogin } from '../hooks/useLogin'
 
 // image
 import Gator from '../assets/Gator.jpg'
 
 export default function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const { login, error, isPending } = useLogin();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        login(email, password);
+    };
 
     const defaultTheme = createTheme();
 
@@ -54,7 +64,7 @@ export default function Login() {
                     <Typography component="h1" variant="h5">
                     Log In
                     </Typography>
-                    <Box component="form" noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
                         required
@@ -64,6 +74,8 @@ export default function Login() {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <TextField
                         margin="normal"
@@ -74,19 +86,20 @@ export default function Login() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
                     />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Sign In
-                    </Button>
+                    {!isPending && <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                        Log In
+                    </Button>}
+                    {isPending && <Button disabled fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                        Logging In...
+                    </Button>}
+                    {error && <div>{error}</div>}
                     <Grid container>
                         <Grid item xs>
                         <Link href="#" variant="body2">

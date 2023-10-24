@@ -8,18 +8,26 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
 import Theme from '../Theme';
+
+import { useLogout } from '../hooks/useLogout';
 
 import { Link } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navigation() {
+    const { logout, isPending, error} = useLogout();
+
+    const handleLogout = () => {
+        logout();
+    }
+
     const routes = [
         { text: 'My Dashboard', link: '/dashboard' },
         { text: 'Calendar', link: '/calendar' },
         { text: 'Create Event', link: '/create-event' },
         { text: 'Friends', link: '/friends' },
-        { text: 'Groups', link: '/groups' },
-        { text: 'Log Out', link: '/login' },
+        { text: 'Groups', link: '/groups' }
     ];
 
     return (
@@ -59,11 +67,21 @@ export default function Navbar() {
                 <Divider />
                 <List>
                     {routes.map((route, index) => (
-                        <ListItem key={index} button component={Link} to={route.link}>
+                        <ListItem key={index} component={Link} to={route.link}>
                             <ListItemText primary={route.text} />
                         </ListItem>
                     ))}
                 </List>
+                <Divider/>
+                {!isPending && <Button onClick={handleLogout} variant="contained">
+                    Log Out
+                    </Button>
+                }
+                {isPending && <Button disabled variant="contained">
+                    Logging Out...
+                    </Button>
+                }
+                {error && <div>{error}</div>}
             </Drawer>
         </Box>
     );
