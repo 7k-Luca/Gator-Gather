@@ -1,4 +1,5 @@
 import { useState } from 'react';
+// Material Components
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -6,13 +7,18 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+// Material Icons
+import GoogleIcon from '@mui/icons-material/Google';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+// Material Styles
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // useSignup hook
-import { useSignup } from '../hooks/useSignup';
+import { useSignup } from '../../hooks/useSignup';
 
 const defaultTheme = createTheme();
 
@@ -20,13 +26,17 @@ export default function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [fullName, setFullName] = useState('');
-    const [userName, setUserName] = useState('');
+    const [displayName, setDisplayName] = useState('');
     
-    const { signup, error, isPending } = useSignup();
+    const { signup, googleSignup, error, isPending } = useSignup();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        signup(email, password, fullName, userName);
+        signup(email, password, fullName, displayName);
+    }
+
+    const handleGoogleSignup = () => {
+        googleSignup();
     }
 
     return (
@@ -67,13 +77,13 @@ export default function Signup() {
                     <TextField
                     required
                     fullWidth
-                    id="userName"
+                    id="displayName"
                     label="User Name"
-                    name="userName"
+                    name="displayName"
                     autoComplete="user-name"
                     type="text"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -110,7 +120,13 @@ export default function Signup() {
                 {isPending &&  <Button disabled fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Signing Up...
                 </Button>}
-                {error && <div>{error}</div>}
+                <Button onClick={handleGoogleSignup} disabled={isPending} variant="outlined" startIcon={<GoogleIcon/>} fullWidth>
+                    Sign up with Google
+                </Button>
+                {error && <Alert severity="error">
+                    <AlertTitle>Error</AlertTitle>
+                    This is an error alert — <strong>{error}</strong>
+                    </Alert>}
                 <Grid container justifyContent="flex-end">
                 <Grid item>
                     <Link href="/login" variant="body2">

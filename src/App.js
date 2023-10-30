@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -8,8 +8,8 @@ import Calendar from './pages/Calendar';
 import CreateEvent from './pages/CreateEvent';
 import Friends from './pages/Friends';
 import Groups from './pages/Groups';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
+import Signup from './pages/guestPages/Signup';
+import Login from './pages/guestPages/Login';
 import Err from './pages/Err';
 import Navigation from './components/Navigation';
 import Theme from './Theme';
@@ -41,6 +41,9 @@ function App() {
                   <Route path="/friends" element={<Friends />} />
                   <Route path="/groups" element={<Groups />} />
                   <Route path="*" element={<Err />} />
+                  <Route path="/signup" element={<Navigate to="/dashboard" replace/>}/>
+                  <Route path="/login" element={<Navigate to="/dashboard" replace/>}/>
+                  <Route path="/" element={<Navigate to="/dashboard" replace/>}/>
                 </Routes>
               </MainContent>
             </>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+// Material Components
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,24 +10,33 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+// Material Icons
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import GoogleIcon from '@mui/icons-material/Google';
+// Material Styles
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useLogin } from '../hooks/useLogin'
+
+// useLogin hook
+import { useLogin } from '../../hooks/useLogin'
 
 // image
-import Gator from '../assets/Gator.jpg'
+import Gator from '../../assets/Gator.jpg'
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const { login, error, isPending } = useLogin();
+    const { login, googleLogin, error, isPending } = useLogin();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         login(email, password);
     };
+
+    const handleGoogleLogin = () => {
+        googleLogin();
+    }
 
     const defaultTheme = createTheme();
 
@@ -100,6 +110,9 @@ export default function Login() {
                         Logging In...
                     </Button>}
                     {error && <div>{error}</div>}
+                    <Button onClick={handleGoogleLogin} disabled={isPending} variant="outlined" startIcon={<GoogleIcon/>} fullWidth>
+                        Log in with Google
+                    </Button>
                     <Grid container>
                         <Grid item xs>
                         <Link href="#" variant="body2">
