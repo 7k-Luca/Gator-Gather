@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Dashboard from './pages/Dashboard';
 import Calendar from './pages/Calendar';
+import Profile from './pages/Profile';
 import CreateEvent from './pages/CreateEvent';
 import Friends from './pages/Friends';
 import Groups from './pages/Groups';
@@ -17,7 +18,6 @@ import { useAuthContext } from './hooks/useAuthContext';
 
 function App() {
   const { authIsReady, user } = useAuthContext();
-
   const MainContent = styled(Box)({
     flexGrow: 1,
     padding: Theme.spacing(3),
@@ -36,6 +36,7 @@ function App() {
               <MainContent>
                 <Routes>
                   <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/profile/:uid" element={<Profile />} />
                   <Route path="/calendar" element={<Calendar />} />
                   <Route path="/create-event" element={<CreateEvent />} />
                   <Route path="/friends" element={<Friends />} />

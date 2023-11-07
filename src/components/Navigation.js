@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 // Material Components
 import Box from '@mui/material/Box';
@@ -13,16 +13,19 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Theme from '../Theme';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Notifications from '@mui/icons-material/Notifications'
 
 // useLogout & useDeleteAccount hooks
 import { useLogout } from '../hooks/useLogout';
 import { useDeleteAccount } from '../hooks/useDeleteAccount';
 
 // useAuthContxt
-import { useAuthContext } from '../hooks/useAuthContext';
 import { projectFirestore, projectAuth } from '../firebase/config';
 
 import { Link } from "react-router-dom";
+import { TextField } from '@mui/material';
 
 const modalStyle = {
     position: 'absolute',
@@ -37,27 +40,39 @@ const modalStyle = {
 }
 
 export default function Navigation() {
-    const [displayName, setDisplayName] = useState('Loading...');
+    const [fullName, setFullName] = useState('Loading...');
+    const [password, setPassword] = useState('');
     const [deleteModal, setDeleteModal] = useState(false);
+    const [profileModal, setProfileModal] = useState(null);
+    const open = Boolean(profileModal);
+    const buttonRef = useRef(null);
     const { logout, isPending, error } = useLogout();
     const { deleteAccount, isDeletePending, deleteError } = useDeleteAccount();
-
+    const { uid } = projectAuth.currentUser;
     const navigate = useNavigate();
+
+    const handleProfileOpen = (event) => {
+        setProfileModal(event.currentTarget);
+    }
+    const handleProfileClose = () => {
+        setProfileModal(null);
+        navigate(`/profile/${uid}`);
+    }
 
     // I need to create a useFirstore Hook
     useEffect(() => {
         const { uid } = projectAuth.currentUser;
         const userDocRef = projectFirestore.collection('users').doc(uid);
-        async function getDisplayName() {
+        async function getFullName() {
             try {
                 const doc = await userDocRef.get();
                 if (doc.exists) {
-                    const displayName = doc.data().displayName;
-                    // Now you can use the displayName in your application
-                    setDisplayName(displayName);
+                    const fullName = doc.data().fullName;
+                    // Now you can use the fullName in your application
+                    setFullName(fullName);
                 } else {
                     // doc.data() will be undefined in this case
-                    setDisplayName("Guest");
+                    setFullName("Guest");
                 }
             } catch (error) {
                 // Handle any errors here
@@ -65,7 +80,7 @@ export default function Navigation() {
                 return "Error";
             }
         }
-        getDisplayName();
+        getFullName();
     }, [])
     
 
@@ -74,9 +89,10 @@ export default function Navigation() {
         navigate('/login')
     }
 
-    // const handleDeleteAccount = (password) => {
-    //     deleteAccount(password);
-    // }  
+    const handleDeleteAccount = async () => {
+        await deleteAccount(password);
+        closeDeleteModal();
+    }  
 
     const openDeleteModal = () => {
         setDeleteModal(true);
@@ -102,10 +118,37 @@ export default function Navigation() {
                         Gator Gather
                     </Typography>
                 </Toolbar>
+                
                 <Toolbar>
-                    <Typography variant="h6" noWrap component="div" align='center'>
-                    {displayName}
-                    </Typography>
+                    <Button variant="contained" sx={{marginRight: 2}}>
+                        <Notifications /> 
+                        {/* TODO: If user had a notification the notification button identifies that and then you will be able to see that notification and click on it to view it. if there are no notifcations and select the notifications button it will read no notifications available. */}
+                    </Button>
+                    <Button variant="contained" onClick={handleProfileOpen} id="basic-button" ref={buttonRef} aria-controls={open ? 'basic-menu' : undefined} aria-haspopup="true" aria-expanded={open ? 'true' : undefined}>
+                        <Typography variant="subtitle1" noWrap component="div" align='center'>
+                        {fullName}
+                        </Typography>
+                    </Button>
+                    <Menu
+                        anchorEl={profileModal}
+                        open={open}
+                        onClose={() => setProfileModal(null)}
+                        id="basic-menu"
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                        }}
+                    >
+                        <MenuItem onClick={handleProfileClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </Menu>
                 </Toolbar>
                 </Box>
                 
@@ -144,14 +187,7 @@ export default function Navigation() {
                     ))}
                 </List>
                 
-                {!isPending && !isDeletePending && <>
-                <Box paddingBottom={2} alignSelf="center">
-                    <Button onClick={handleLogout} variant="contained">
-                    Log Out
-                    </Button>
-                </Box>
-                    </>
-                }
+                
                 <Box alignSelf="center">
                     <Button onClick={openDeleteModal} variant="contained">
                         Delete Account
@@ -171,11 +207,19 @@ export default function Navigation() {
                             <Typography id="modal-modal-describiton" align="center" variant="h6" component="h2"> 
                                 Are you sure you would like to delete your account?
                             </Typography>
+                            <TextField
+                                label="Password"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                fullWidth
+                            />
+
                             <Box flexDirection="row" alignSelf="center" alignItems='center' justifyContent="center" justifySelf="center"> 
                                 <Button onClick={closeDeleteModal}>
                                     Close
                                 </Button>
-                                <Button onClick={deleteAccount}>
+                                <Button onClick={handleDeleteAccount}>
                                     Delete Account
                                 </Button>
                             </Box>
